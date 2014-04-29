@@ -1,0 +1,73 @@
+body {
+    background-color: #fff;
+    font-size: 12px;
+    font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    color: #444;  
+    margin: 10px;
+}
+
+h1 {
+    font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+    color: #000;
+}
+
+a:link, a:visited {
+  color: #045491;
+  font-weight : bold;
+  text-decoration: none;
+}
+
+a:link:hover, a:visited:hover  {
+  color: #045491;
+  font-weight : bold;
+  text-decoration : underline;
+}
+
+#top h1{
+    font-size: 36pt;
+    max-width: 40%;
+}
+
+#left ul {
+    list-style-type: none;
+}
+
+.centered{
+    text-align: center
+}
+
+.clearfix { clear:both }
+
+
+/* ADVANCED */
+
+// from register and login forms
+div.labelAndInput{
+}
+div.labelAndInput label{
+    display: block;
+    font-weight: normal;
+    padding: 0 0 0.1em 0;
+    font-size: 1.1em;
+}
+div.labelAndInput input, div.labelAndInput select{
+    display:block;
+    width: 20em;
+    margin: 0 0 1em 0;
+    padding: .5em .8em;
+    font-size: 1.2em;
+    color: #777;
+}
+div.labelAndInput input { border-radius: 5px; }
+div.labelAndInput .bloodGroup {
+    width: 9em; 
+    display: inline;
+}
+div.labelAndInput .rh {
+    margin-left: 2em;
+    width: 9em; 
+    display: inline;
+}
