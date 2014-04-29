@@ -53,15 +53,17 @@ public class DBConnection {
         i = value.iterator();
         while(i.hasNext()){
             Object element = i.next();
+            element = "'" + element + "'";
             valuesEnumeration += element + ",";
         }
-        //quita las comas (,) al final de ambos strings
+        
+        //quita las comas (,) al final del primer string y coma y apóstrofe del segundo (,')
         fieldsEnumeration = fieldsEnumeration.substring(0, fieldsEnumeration.length()-1);
         valuesEnumeration = valuesEnumeration.substring(0, valuesEnumeration.length()-1);
         
         // crea la query (string) para la inserción
         String query;
-        query = "INSERT INTO " + table + "(" + fieldsEnumeration + ")";
+        query = "INSERT INTO " + table + " (" + fieldsEnumeration + ")";
         query += " VALUES (" + valuesEnumeration + ")";
         
         // realiza el insert

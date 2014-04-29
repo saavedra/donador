@@ -79,7 +79,7 @@ public class User {
         this.bloodFactor = bloodFactor;
     }
     
-    public boolean create(){
+    public String create(){
         // crea arrays con los campos y los valores a insertar en BD
         ArrayList fields = new ArrayList();
         ArrayList values = new ArrayList();
@@ -95,6 +95,19 @@ public class User {
         // conecta a la bd
         DBConnection db = new DBConnection();
         // inserta los datos
-        return db.insert("User", fields, values);
+        if (db.insert("User", fields, values)){
+            String retString = "<div class=\"success\">";
+            retString += "<p>Usuario creado con éxito.</p>";
+            retString += "</div>";
+            
+            return retString;
+        }
+        else {
+            String retString = "<div class=\"failure\">";
+            retString += "<p>Ha ocurrido un error en la creación de usuario.</p>";
+            retString += "</div>";
+            
+            return retString;
+        }
     }
 }
