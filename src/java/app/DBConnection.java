@@ -39,34 +39,126 @@ public class DBConnection {
         }
     }
     
+    /**
+     * Creates a concatenated string with an start, the fields separated by another string, and an end
+     * @param array the array to be converted into a string
+     * @param separator the delimiter for each element of the array in the string.
+     * @param startsWith a String to be inserted at the start of the resulting string
+     * @param endsWith a String to be inserted at the end of the resulting String
+     * @return 
+     */
+    private String arrayListToString(ArrayList array, String separator, String startsWith, String endsWith){
+        // crea el string a devolver
+        String retString = startsWith;
+        // rellena el string
+        Iterator i = array.iterator();
+        while(i.hasNext()){
+            Object element = i.next();
+            retString += element + separator;
+        }
+        // quita el separador del último elemento insertado
+        retString = retString.substring(0, retString.length() - separator.length());
+        // añade el final
+        retString += endsWith;
+        
+        return retString;
+    }
+    /**
+     * Creates a string from an array list with a separator between fields
+     * @param array array to be converted to string
+     * @param separator separator to be inserted between fields
+     * @return 
+     */
+    private String arrayListToString(ArrayList array, String separator){
+        return arrayListToString(array, separator, "", "");
+    }
+    /**
+     * Creates a coma-separated string from an arraylist
+     * @param array array containing the fields to be concatenated
+     * @return 
+     */
+    private String arrayListToString(ArrayList array){
+        return arrayListToString(array, ",");
+    }
+    
+    
+    /**
+     * Creates a record in the database
+     * @param table Table in which the record will be inserted
+     * @param field An array of strings containing the fields to be affected by the insert operation
+     * @param value An array of the values in correlated order with the fields to be inserted
+     * @return true if the operation was successful, false if not
+     */
     public boolean insert(String table, ArrayList field, ArrayList value){
-        // crea los strings de la consulta
-        String fieldsEnumeration = "";
-        String valuesEnumeration = "";
-        // define el string de los campos
-        Iterator i = field.iterator();
-        while(i.hasNext()){
-            Object element = i.next();
-            fieldsEnumeration += element + ",";
-        }
-        // define el string de los valores
-        i = value.iterator();
-        while(i.hasNext()){
-            Object element = i.next();
-            element = "'" + element + "'";
-            valuesEnumeration += element + ",";
-        }
-        
-        //quita las comas (,) al final del primer string y coma y apóstrofe del segundo (,')
-        fieldsEnumeration = fieldsEnumeration.substring(0, fieldsEnumeration.length()-1);
-        valuesEnumeration = valuesEnumeration.substring(0, valuesEnumeration.length()-1);
-        
         // crea la query (string) para la inserción
         String query;
-        query = "INSERT INTO " + table + " (" + fieldsEnumeration + ")";
-        query += " VALUES (" + valuesEnumeration + ")";
+        query = "INSERT INTO " + table + " (" + arrayListToString(field) + ")";
+        query += " VALUES (" + arrayListToString(value, "','", "'", "'") + ")";
         
         // realiza el insert
+        try{
+            PreparedStatement st = conn.prepareStatement(query);
+            st.execute();
+            
+        } catch (SQLException e){
+            e.printStackTrace(System.out);
+            return false;
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Updates a record in the database
+     * @param table Table in which the record will be updated
+     * @param lookup Field to lookup for the change operation
+     * @param lookupValue Value of the field to lookup for the change operation
+     * @param field Contains a list of the fields to be updated
+     * @param value Contains the new values in correlated order to the fields
+     * @return 
+     */
+    public boolean update(String table, String lookup, String lookupValue, ArrayList field, ArrayList value){
+        // crea un nuevo arrayList con la forma "field = value"
+        ArrayList fieldsAndValues = new ArrayList();
+        // realiza la combinación
+        Iterator i = field.iterator();
+        Iterator j = value.iterator();
+        while(i.hasNext()){
+            Object fieldString = i.next();
+            Object valueString = j.next();
+            fieldsAndValues.add(fieldString + " = " + valueString);
+        }
+        // crea la query
+        String query;
+        query = "UPDATE " + table + " SET " + arrayListToString(fieldsAndValues);
+        query += " WHERE " + lookup + " = " + lookupValue;
+        
+        // realiza la operación
+        try{
+            PreparedStatement st = conn.prepareStatement(query);
+            st.execute();
+            
+        } catch (SQLException e){
+            e.printStackTrace(System.out);
+            return false;
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Deletes a record from the database
+     * @param table Table to which the delete operation will afect
+     * @param field Field by which the record will be identified
+     * @param value Value of the field of the removed object
+     * @return true if the operation was successful, false if not
+     */
+    public boolean delete(String table, String field, String value){
+        // crea la query
+        String query;
+        query = "DELETE FROM " + table + " WHERE " + field + " = " + value;
+        
+        // realiza la operación
         try{
             PreparedStatement st = conn.prepareStatement(query);
             st.execute();

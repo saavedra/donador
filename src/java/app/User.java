@@ -103,7 +103,7 @@ public class User {
             return retString;
         }
         else {
-            String retString = "<div class=\"failure\">";
+            String retString = "<div class=\"error\">";
             retString += "<p>Ha ocurrido un error en la creación de usuario.</p>";
             retString += "</div>";
             
