@@ -9,6 +9,7 @@ package app;
 import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -169,6 +170,20 @@ public class DBConnection {
         }
         
         return true;
+    }
+    
+    /**
+     * Devuelve un registro de la base de datos
+     * @param table Table to which the retrieve operation will afect
+     * @param lookup 
+     * @param lookupValue
+     * @return
+     * @throws SQLException 
+     */
+    public ResultSet retrieve (String table, String lookup, String lookupValue) throws SQLException{
+        String query = "SELECT * FROM " + table + " WHERE " + lookup + " = " + lookupValue;
+        PreparedStatement st = conn.prepareStatement(query);
+        return st.executeQuery();
     }
     
     public void close() throws SQLException{
