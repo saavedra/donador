@@ -30,7 +30,13 @@ public class User {
      */
     public User() {
     }
-
+    public int getId(){
+        return id;
+    }
+    public void setId(int id){
+        this.id = id;
+    }
+    
     public String getName() {
         return name;
     }
@@ -85,12 +91,12 @@ public class User {
         ArrayList values = new ArrayList();
         
         // los campos y valores se deben añadir en el orden correlativo.
-        fields.add("name"); values.add(this.name);
-        fields.add("email"); values.add(this.email);
-        fields.add("password"); values.add(this.password);
-        fields.add("region"); values.add(this.region);
-        fields.add("bloodgroup"); values.add(this.bloodGroup);
-        fields.add("bloodfactor"); values.add(this.bloodFactor);
+        fields.add("NAME"); values.add(this.name);
+        fields.add("EMAIL"); values.add(this.email);
+        fields.add("PASSWORD"); values.add(this.password);
+        fields.add("REGION"); values.add(this.region);
+        fields.add("BLOOD_GROUP"); values.add(this.bloodGroup);
+        fields.add("BLOOD_FACTOR"); values.add(this.bloodFactor);
         
         // conecta a la bd
         DBConnection db = new DBConnection();
