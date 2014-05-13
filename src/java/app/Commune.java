@@ -13,17 +13,23 @@ package app;
 public class Commune {
 
     private int id;
-    private int name;
+    private String name;
     private Region region;
-
-    Commune(){
+    
+    Commune(){}
+    
+    Commune(int id){
+        this.id = id;
+        // consulta nombre e id de región a la base de datos
+        this.name = "Temuco";
+        this.region = new Region(9);
     }
 
     public int getId() {
         return id;
     }
 
-    public int getName() {
+    public String getName() {
         return name;
     }
 

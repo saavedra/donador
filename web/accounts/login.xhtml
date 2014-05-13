@@ -7,14 +7,21 @@
     <body>
 
         <ui:composition template="../template.xhtml">
-
+            
+            <ui:define name="left">
+            </ui:define>
+            
             <ui:define name="content">
                 <h:form>
-                    <h:outputLabel for="email">e-mail</h:outputLabel>
-                    <h:inputText value="#{user.email}" id="email" />
+                    <div class="labelAndInput">
+                        <h:outputLabel for="email">e-mail</h:outputLabel>
+                        <h:inputText value="#{user.email}" id="email" />
+                    </div>
                     
-                    <h:outputLabel for="pass">Contraseña</h:outputLabel>
-                    <h:inputSecret value="#{user.password}" id="pass" />
+                    <div class="labelAndInput">
+                        <h:outputLabel for="pass">Contraseña</h:outputLabel>
+                        <h:inputSecret value="#{user.password}" id="pass" />
+                    </div>
                         
                 </h:form>
             </ui:define>

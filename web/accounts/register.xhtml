@@ -33,9 +33,29 @@
                     </div>
                     
                     <!--Datos de donante-->
-                    <div class="labelAndInput">
+                    <div class="labelAndInput" id="regionSelectContainer">
+                        <label for="regionSelect">Región</label>
+                        <select id="regionSelect">
+                            <option value="14">Arica y Parinacota</option>
+                            <option value="1">Tarapacá</option>
+                            <option value="2">Antofagasta</option>
+                            <option value="3">Atacama</option>
+                            <option value="4">Coquimbo</option>
+                            <option value="5">Valparaíso</option>
+                            <option value="13" selected="selected">Metropolitana</option>
+                            <option value="6">O'Higgins</option>
+                            <option value="7">Maule</option>
+                            <option value="8">Bío Bío</option>
+                            <option value="9">La Araucanía</option>
+                            <option value="15">Los Ríos</option>
+                            <option value="10">Los Lagos</option>
+                            <option value="11">Aysén</option>
+                            <option value="12">Magallanes</option>
+                            
+                        </select>
+                        <!--
                         <h:outputLabel for="region">Región</h:outputLabel>
-                        <h:selectOneMenu value="#{user.region}" id="region">
+                        <h:selectOneMenu value="#user.region}" id="region">
                             <f:selectItem itemValue="14" itemLabel="Arica y Parinacota" />
                             <f:selectItem itemValue="1" itemLabel="Atacama" />
                             <f:selectItem itemValue="2" itemLabel="Antofagasta" />
@@ -52,6 +72,22 @@
                             <f:selectItem itemValue="11" itemLabel="Aysén" />
                             <f:selectItem itemValue="12" itemLabel="Magallanes" />
                         </h:selectOneMenu>
+                        -->
+                    </div>
+                    
+                    <div class="labelAndInput" id="communeSelectContainer">
+                        <h:outputLabel for="communeSelect">Comuna</h:outputLabel>
+                        <h:selectOneMenu value="#{user.commune}" id="commune">
+                            <f:selectItem itemValue="1" itemLabel="Santiago" />
+                        </h:selectOneMenu>
+                        
+                        <!--<select id="communeSelect">
+                            <option value="1">Santiago</option>
+                        </select>
+                        
+                        <h:selectOneMenu value="# {user}" id="commune">
+                            
+                        </h:selectOneMenu>-->
                     </div>
                     
                     <div class="labelAndInput">
@@ -76,8 +112,13 @@
                     </div>
                     
                 </h:form>
+                
+                
+                <h:outputScript name="./js/register.js" />
+            
             </ui:define>
 
+          
         </ui:composition>
 
     </body>

@@ -7,15 +7,14 @@
     <body>
 
         <ui:composition template="./../template.xhtml">
-            
+
             <ui:define name="left">
             </ui:define>
-            
+
             <ui:define name="content">
                 <div class="#{user.lastOperationStatus}">
-                    <h:outputText value="#{user.create()}" escape="false" />
+                    <h:outputText value="#{user.authenticate()}" escape="false" />
                 </div>
-                
             </ui:define>
 
         </ui:composition>

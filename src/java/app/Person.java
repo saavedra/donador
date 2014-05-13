@@ -14,9 +14,10 @@ public class Person {
     private int id;
     private String name;
     private String surname; 
-    //private Commune commune;
+    private Commune commune;
 
     public Person() {
+        commune = new Commune();
     }
 
     public int getId() {
@@ -39,14 +40,14 @@ public class Person {
         this.surname = surname;
     }
 
-    /*
-    public Commune getCommune() {
-        return commune;
+    
+    public int getCommune() {
+        return this.commune.getId();
     }
 
-    public void setCommune(Commune commune) {
-        this.commune = commune;
+    public void setCommune(int commune_id) {
+        this.commune = new Commune(commune_id);
     }
-    */
+    
     
 }

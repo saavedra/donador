@@ -53,13 +53,18 @@ public class Menu {
      * @return 
      */
     public String display(){        
-        if(this.activeUser.isLoggedIn())
-            return "holi";
+        if(this.activeUser.isLoggedIn()){
+            this.flush();
+            this.elements.add("<li>" + makeLink("#", "Mi cuenta") + "</li>");
+            this.elements.add("<li>" + makeLink("accounts/logout.xhtml", "Logout") + "</li>");
+            this.generate();
+        }
         // if not logged in
         else{
             this.flush();
             this.elements.add("<li>" + makeLink("accounts/register.xhtml", "Quiero donar") + "</li>");
             this.elements.add("<li>" + makeLink("accounts/register.xhtml", "Necesito donantes") + "</li>");
+            this.elements.add("<li>" + makeLink("accounts/login.xhtml", "Ingresar") + "</li>");
             this.generate();
         }
         

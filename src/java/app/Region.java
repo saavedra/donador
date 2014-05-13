@@ -14,8 +14,14 @@ public class Region {
     private int number;
     private String name;
 
+    Region(){}
+    
     Region(int number){
         // carga la región desde la base de datos, de acuerdo con el nombre especificado
+        if(number == 9)
+            this.name = "La Araucanía";
+        else
+            this.name = "Metropolitana";
     }
 
     public int getNumber() {
