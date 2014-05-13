@@ -18,9 +18,8 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean(name="user")
 @SessionScoped
-public class User {
+public class User extends Person {
     private int id;
-    private String name;
     private String email;
     private String password;
     private String region;
@@ -37,19 +36,9 @@ public class User {
     public User() {
         this.loggedIn = false;
     }
-    public int getId(){
-        return id;
-    }
+
     public void setId(int id){
         this.id = id;
-    }
-    
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getEmail() {
@@ -124,12 +113,12 @@ public class User {
         ArrayList values = new ArrayList();
         
         // los campos y valores se deben añadir en el orden correlativo.
-        fields.add("NAME"); values.add(this.name);
-        fields.add("EMAIL"); values.add(this.email);
-        fields.add("PASSWORD"); values.add(this.password);
-        fields.add("REGION"); values.add(this.region);
-        fields.add("BLOOD_GROUP"); values.add(this.bloodGroup);
-        fields.add("BLOOD_FACTOR"); values.add(this.bloodFactor);
+        fields.add("name"); values.add(this.getName());
+        fields.add("email"); values.add(this.email);
+        fields.add("password"); values.add(this.password);
+        fields.add("region"); values.add(this.region);
+        fields.add("bloodGroup"); values.add(this.bloodGroup);
+        fields.add("bloodFactor"); values.add(this.bloodFactor);
         
         // conecta a la bd
         DBConnection db = new DBConnection();
@@ -140,12 +129,11 @@ public class User {
             if( lastOperationStatus ){
                 this.loggedIn = true;
                 // redirecciona
-                FacesContext.getCurrentInstance().getExternalContext().redirect("/index.xhtml");
+                Common common = new Common();
+                FacesContext.getCurrentInstance().getExternalContext().redirect(common.getBASE_URL() + "index.xhtml");
                 return "Usuario creado con éxito: " + lastOperationMessage;
             }
             else{
-                FacesContext.getCurrentInstance().getExternalContext().redirect("/index.xhtml");
-                //externalContext.redirect("foo.xhtml");
                 return "Ocurrió un error al crear el usuario: " + lastOperationMessage;
             }
     }

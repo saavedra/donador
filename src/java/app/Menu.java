@@ -52,9 +52,7 @@ public class Menu {
      * Entrega el menú como un string, listo para ser desplegado
      * @return 
      */
-    public String display(){
-        Common common = new Common();
-        
+    public String display(){        
         if(this.activeUser.isLoggedIn())
             return "holi";
         // if not logged in
