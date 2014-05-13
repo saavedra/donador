@@ -15,13 +15,12 @@ h1 {
 }
 
 a:link, a:visited {
-  color: #045491;
+  color: #980002;
   font-weight : bold;
   text-decoration: none;
 }
 
 a:link:hover, a:visited:hover  {
-  color: #045491;
   font-weight : bold;
   text-decoration : underline;
 }
@@ -43,6 +42,24 @@ a:link:hover, a:visited:hover  {
 
 
 /* ADVANCED */
+
+#top h1{
+    max-width: 30%;
+}
+
+#top #menu{
+    max-width: 65%;
+    float: right;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    top: -2.5em;
+    text-transform: uppercase;
+}
+#top #menu li{
+    display: inline;
+    padding: 0 1em;
+}
 
 // from register and login forms
 div.labelAndInput{

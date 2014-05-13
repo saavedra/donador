@@ -29,13 +29,20 @@ public class DBConnection {
     private final String url = "jdbc:mysql://" + this.dbHost + ":" + this.dbPort + "/" + this.dbName;
     private Connection conn;
     
+    private boolean operationStatus;
+    private String operationMessage;
+    
     DBConnection (){
         try{
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             this.conn = (Connection) DriverManager.getConnection(this.url, this.dbUser, this.dbPass);
+            this.operationStatus = true;
+            this.operationMessage = "Connected to database.";
             System.out.println("Connected to database server");
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException e){
             System.out.println("A connection with the database could not be stablished.");
+            this.operationStatus = false;
+            this.operationMessage = "Could not connect to database.";
             e.printStackTrace(System.out);
         }
     }
@@ -90,7 +97,7 @@ public class DBConnection {
      * @param value An array of the values in correlated order with the fields to be inserted
      * @return true if the operation was successful, false if not
      */
-    public boolean insert(String table, ArrayList field, ArrayList value){
+    public void insert(String table, ArrayList field, ArrayList value){
         // crea la query (string) para la inserción
         String query;
         query = "INSERT INTO " + table + " (" + arrayListToString(field) + ")";
@@ -101,12 +108,14 @@ public class DBConnection {
             PreparedStatement st = conn.prepareStatement(query);
             st.execute();
             
+            this.operationStatus = true;
+            this.operationMessage = "Insert sucessful";
+            
         } catch (SQLException e){
+            this.operationStatus = false;
+            this.operationMessage = e.getMessage();
             e.printStackTrace(System.out);
-            return false;
         }
-        
-        return true;
     }
     
     /**
@@ -140,10 +149,14 @@ public class DBConnection {
             st.execute();
             
         } catch (SQLException e){
+            this.operationStatus = false;
+            this.operationMessage = e.getMessage();
             e.printStackTrace(System.out);
             return false;
         }
         
+        this.operationStatus = true;
+        this.operationMessage = "Update sucessful";
         return true;
     }
     
@@ -165,6 +178,8 @@ public class DBConnection {
             st.execute();
             
         } catch (SQLException e){
+            this.operationStatus = false;
+            this.operationMessage = e.getMessage();
             e.printStackTrace(System.out);
             return false;
         }
@@ -189,4 +204,14 @@ public class DBConnection {
     public void close() throws SQLException{
         this.conn.close();
     }
+
+    public boolean isOperationStatus() {
+        return operationStatus;
+    }
+
+    public String getOperationMessage() {
+        return operationMessage;
+    }
+    
+    
 }

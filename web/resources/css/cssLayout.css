@@ -18,7 +18,7 @@
 
 #left {
     float: left;
-    width: 20%;
+    width: 27%;
 }
 
 .center_content {
@@ -27,19 +27,6 @@
 }
 
 .left_content {
-    margin-left: 22%;
+    margin-left: 27%;
 }
-
-#top a:link, #top a:visited {
-  color: white;
-  font-weight : bold;
-  text-decoration: none;
-}
-
-#top a:link:hover, #top a:visited:hover  {
-  color: black;
-  font-weight : bold;
-  text-decoration : underline;
-}
-
 

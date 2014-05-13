@@ -6,15 +6,17 @@
 
 package app;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
  * @author Alexis Saavedra
  */
-@ManagedBean
+@ManagedBean(name="user")
 @SessionScoped
 public class User {
     private int id;
@@ -24,11 +26,16 @@ public class User {
     private String region;
     private String bloodGroup;
     private String bloodFactor;
+    private boolean lastOperationStatus;
+    private String lastOperationMessage;
+    private boolean loggedIn;
+    private String menu;
 
     /**
      * Creates a new instance of Usuario
      */
     public User() {
+        this.loggedIn = false;
     }
     public int getId(){
         return id;
@@ -84,8 +91,34 @@ public class User {
     public void setBloodFactor(String bloodFactor) {
         this.bloodFactor = bloodFactor;
     }
+
+    public String getLastOperationStatus() {
+        if(lastOperationStatus)
+            return "success";
+        else return "error";
+    }
+
+    public String getLastOperationMessage() {
+        return lastOperationMessage;
+    }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
     
-    public String create(){
+    public String getMenu(){
+        Menu menu = new Menu(this);
+        return menu.display();
+    }
+    
+    
+    
+    
+    public String create() throws IOException{
         // crea arrays con los campos y los valores a insertar en BD
         ArrayList fields = new ArrayList();
         ArrayList values = new ArrayList();
@@ -101,19 +134,19 @@ public class User {
         // conecta a la bd
         DBConnection db = new DBConnection();
         // inserta los datos
-        if (db.insert("User", fields, values)){
-            String retString = "<div class=\"success\">";
-            retString += "<p>Usuario creado con éxito.</p>";
-            retString += "</div>";
-            
-            return retString;
-        }
-        else {
-            String retString = "<div class=\"error\">";
-            retString += "<p>Ha ocurrido un error en la creación de usuario.</p>";
-            retString += "</div>";
-            
-            return retString;
-        }
+        db.insert("User", fields, values);
+            this.lastOperationMessage = db.getOperationMessage();
+            this.lastOperationStatus = db.isOperationStatus();
+            if( lastOperationStatus ){
+                this.loggedIn = true;
+                // redirecciona
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/index.xhtml");
+                return "Usuario creado con éxito: " + lastOperationMessage;
+            }
+            else{
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/index.xhtml");
+                //externalContext.redirect("foo.xhtml");
+                return "Ocurrió un error al crear el usuario: " + lastOperationMessage;
+            }
     }
 }
