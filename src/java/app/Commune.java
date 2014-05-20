@@ -6,6 +6,9 @@
 
 package app;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  *
  * @author Alexis Saavedra
@@ -18,11 +21,16 @@ public class Commune {
     
     Commune(){}
     
-    Commune(int id){
+    Commune(int id) throws SQLException{
         this.id = id;
         // consulta nombre e id de región a la base de datos
-        this.name = "Temuco";
-        this.region = new Region(9);
+        DBConnection db = new DBConnection();
+        ResultSet commune = db.retrieve("commune", "id_commune", "" + id);
+        
+        while (commune.next()){
+            name = commune.getString("name");
+            this.region = new Region(commune.getInt("region_commune"));
+        }
     }
     
     Commune(int id, String name, Region region){

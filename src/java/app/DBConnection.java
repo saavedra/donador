@@ -196,7 +196,8 @@ public class DBConnection {
      * @throws SQLException 
      */
     public ResultSet retrieve (String table, String lookup, String lookupValue) throws SQLException{
-        String query = "SELECT * FROM " + table + " WHERE " + lookup + " = " + lookupValue;
+        String query = "SELECT * FROM " + table + " WHERE " + lookup + " = '" + lookupValue + "'";
+        System.out.println(query);
         PreparedStatement st = conn.prepareStatement(query);
         return st.executeQuery();
     }

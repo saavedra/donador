@@ -6,6 +6,8 @@
 
 package app;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author Alexis
@@ -45,7 +47,7 @@ public class Person {
         return this.commune.getId();
     }
 
-    public void setCommune(int commune_id) {
+    public void setCommune(int commune_id) throws SQLException {
         this.commune = new Commune(commune_id);
     }
     

@@ -23,12 +23,14 @@ public class Region {
     Region(){
     }
     
-    Region(int number){
+    Region(int number) throws SQLException{
+        this.number = number;
         // carga la región desde la base de datos, de acuerdo con el nombre especificado
-        if(number == 9)
-            this.name = "La Araucanía";
-        else
-            this.name = "Metropolitana";
+        DBConnection db = new DBConnection();
+        ResultSet region = db.retrieve("region", "number", "" + number);
+        while (region.next()){
+            name = region.getString("name");
+        }
     }
 
     public int getNumber() {

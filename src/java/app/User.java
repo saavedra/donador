@@ -7,6 +7,8 @@
 package app;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -95,7 +97,6 @@ public class User extends Person {
         return menu.display();
     }
     
-    public void authenticate(){}
     
     public void logout() throws IOException{
         // invalida la sesión
@@ -118,14 +119,14 @@ public class User extends Person {
         fields.add("name"); values.add(this.getName());
         fields.add("email"); values.add(this.email);
         fields.add("password"); values.add(this.password);
-        fields.add("region"); values.add(this.getCommune());
-        fields.add("bloodGroup"); values.add(this.bloodGroup);
-        fields.add("bloodFactor"); values.add(this.bloodFactor);
+        fields.add("blood_group"); values.add(this.bloodGroup);
+        fields.add("blood_factor"); values.add(this.bloodFactor);
+        fields.add("commune_person"); values.add(this.getCommune());
         
         // conecta a la bd
         DBConnection db = new DBConnection();
         // inserta los datos
-        db.insert("User", fields, values);
+        db.insert("person", fields, values);
             this.lastOperationMessage = db.getOperationMessage();
             this.lastOperationStatus = db.isOperationStatus();
             if( lastOperationStatus ){
@@ -138,5 +139,43 @@ public class User extends Person {
             else{
                 return "Ocurrió un error al crear el usuario: " + lastOperationMessage;
             }
+    }
+    
+    public String authenticate() throws SQLException, IOException{
+        DBConnection db = new DBConnection();
+        ResultSet persona = db.retrieve("person", "email", this.email );
+        if(!persona.next()){
+            this.lastOperationStatus = false;
+            this.lastOperationMessage = "Usuario no existe.";
+            System.out.println("no llegué");
+        }
+        else
+            do{
+                System.out.println("llegué aquí");
+                this.id = persona.getInt("id_person");
+                this.setName(persona.getString("name"));
+                this.bloodGroup = persona.getString("blood_group");
+                this.bloodFactor = persona.getString("blood_factor");
+                this.setCommune(persona.getInt("commune_person"));
+                
+                // crea una var temporal para la password en bd
+                String rightpassword;
+                rightpassword = persona.getString("password");
+                // compara la contraseña ingresada con la real
+                if (this.password.equals(rightpassword)){
+                    this.loggedIn = true;
+                    this.lastOperationStatus = true;
+                    this.lastOperationMessage = "Usuario logueado con éxito.";
+                    // redirecciona
+                    Common common = new Common();
+                    FacesContext.getCurrentInstance().getExternalContext().redirect(common.getBASE_URL() + "index.xhtml");
+                }
+                else{
+                    this.lastOperationStatus = false;
+                    this.lastOperationMessage = "La contraseña es incorrecta.";
+                }
+                    
+            }while(persona.next());
+        return this.lastOperationMessage;
     }
 }

@@ -22,6 +22,10 @@
                         <h:outputLabel for="pass">Contraseña</h:outputLabel>
                         <h:inputSecret value="#{user.password}" id="pass" />
                     </div>
+                    
+                    <div class="labelAndInput">
+                        <h:commandButton id="submit" value="Regístrame" action="processLogin" />
+                    </div>
                         
                 </h:form>
             </ui:define>
