@@ -2,6 +2,15 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/Users/Alexis/Dev/Donador/web/resources/js/register.js</file>
+            <file>file:/Users/Alexis/Dev/Donador/src/java/app/Region.java</file>
+            <file>file:/Users/Alexis/Dev/Donador/src/java/app/Commune.java</file>
+            <file>file:/Users/Alexis/Dev/Donador/web/resources/js/communelist.cache.json</file>
+            <file>file:/Users/Alexis/Dev/Donador/web/accounts/register.xhtml</file>
+            <file>file:/Users/Alexis/Dev/Donador/web/ajax/newTemplateClient.xhtml</file>
+            <file>file:/Users/Alexis/Dev/Donador/src/java/app/DBConnection.java</file>
+            <file>file:/Users/Alexis/Dev/Donador/src/java/app/Menu.java</file>
+        </group>
     </open-files>
 </project-private>

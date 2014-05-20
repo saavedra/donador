@@ -24,6 +24,12 @@ public class Commune {
         this.name = "Temuco";
         this.region = new Region(9);
     }
+    
+    Commune(int id, String name, Region region){
+        this.id = id;
+        this.name = name;
+        this.region = region;
+    }
 
     public int getId() {
         return id;
