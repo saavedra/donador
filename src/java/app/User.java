@@ -116,7 +116,8 @@ public class User extends Person {
         ArrayList values = new ArrayList();
         
         // los campos y valores se deben añadir en el orden correlativo.
-        fields.add("name"); values.add(this.getName());
+        fields.add("names"); values.add(this.getName());
+        fields.add("surnames"); values.add(this.getName());
         fields.add("email"); values.add(this.email);
         fields.add("password"); values.add(this.password);
         fields.add("blood_group"); values.add(this.bloodGroup);
